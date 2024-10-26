@@ -5,10 +5,11 @@
     <meta name="viewport" 
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Barcode Scanner</title>
+    <title>Smart Eats</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         /* Basic styles for video element */
         video {
@@ -22,48 +23,53 @@
     </style>
 </head>
 <body>
-<div class="display-cover">
-    <video autoplay playsinline></video> <!-- Add video element for camera feed -->
-    <canvas class="none"></canvas> <!-- Canvas for capturing image -->
+    <div class="display-cover">
+        <div class="video-container">
+            <video autoplay playsinline></video> <!-- Camera feed -->
+        </div>
+        <div class="result-container">
+            <img id="screenshotImage" class="d-none" alt="Captured Image"> <!-- Resulting image -->
+            <p>Scanning this image:</p>
+        </div>
     
+        <div class="controls">
+            <button class="btn btn-danger play" title="Capture Image">
+                <i data-feather="camera"></i> <!-- Change icon to camera -->
+            </button>
+            <button class="btn btn-info capture d-none" title="Capture">
+                <i data-feather="camera"></i> <!-- Change icon to camera -->
+            </button>
+        </div>
+        <br>
+        <div class="results">
+            <div class="healthiness-score-container">
+                <p id="healthinessScore"></p> <!-- Healthiness score display -->
+            </div>
+            <div class="nutrients-container">
+                <h3>Nutrients (per serving):</h3>
+                <ul id="nutrients"></ul> <!-- List for displaying nutrients -->
+            </div>
+            <p id="barcode"></p> <!-- Element for displaying the barcode -->
+        </div>
+        <div class="loading-button-wrapper">
+            <button id="capture" class="loading-button">
+                <span class="button-text">Progress</span>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </button>
+        </div>
+    
+        <div id="notFoundMessage" class="d-none" style="color: red; font-weight: bold;"></div>
+    </div>
+    
+    <!-- Move the select camera button below the video -->
     <div class="video-options">
         <select name="camera" id="cameraSelect" class="custom-select">
             <option value="">Select camera</option>
         </select>
     </div>
-
-    <div class="controls">
-        <button class="btn btn-danger play" title="Capture Image">
-            <i data-feather="camera"></i> <!-- Change icon to camera -->
-        </button>
-        <button class="btn btn-info capture d-none" title="Capture">
-            <i data-feather="camera"></i> <!-- Change icon to camera -->
-        </button>
-    </div>
-    <div class="results">
-        <div class="healthiness-score-container">
-            <p id="healthinessScore"></p> <!-- Healthiness score display -->
-        </div>
-        <div class="nutrients-container">
-            <h3>Nutrients:</h3>
-            <ul id="nutrients"></ul> <!-- List for displaying nutrients -->
-        </div>
-        <p id="barcode"></p> <!-- Element for displaying the barcode -->
-    </div>
-    <div class="loading-button-wrapper">
-        <button id="capture" class="loading-button">
-            <span class="button-text">Capture</span>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
-        </button>
-    </div>
-    
-    <div id="barcode"></div>
-    <div id="nutrients"></div>
-    <div id="healthinessScore"></div>
-    
-</div>
+    <br>
 
 <script src="https://unpkg.com/feather-icons"></script>
 <script src="script.js"></script>

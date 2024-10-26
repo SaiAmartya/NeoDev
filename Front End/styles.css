@@ -1,37 +1,44 @@
 /* Main container for the image display */
 .display-cover {
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center;
+    align-items: center;
     width: 70%; 
     margin: 5% auto; /* Center the container and give top/bottom margin */
     position: relative; /* Positioning context for absolutely positioned elements */
 }
 
-/* Styles for the canvas element that will hold the captured image */
-canvas {
-    display: none; /* Initially hide the canvas */
+.result-container p, img {
+    position: absolute;
+    left: 30px;
+    top: 100px;
+    width: 300px;
+}
+
+.result-container p {
+    display: none;
+    top: 50px;
 }
 
 /* Styles for the dropdown menu to select the camera */
 .video-options {
-    position: absolute; /* Position it relative to the display-cover */
-    left: 20px; /* Distance from the left edge */
-    top: 30px; /* Distance from the top edge */
+    margin: 10px auto;
+    text-align: center;
 }
 
 /* Styles for the control buttons */
 .controls {
-    position: absolute; /* Position controls within the display-cover */
-    right: 20px; 
-    top: 20px; 
-    display: flex; /* Use flexbox for horizontal layout of buttons */
+    position: absolute;
+    right: 30px; 
+    top: 30px;
+    display: flex; /* Keep buttons side by side */
 }
 
 /* Common styles for all buttons in the controls */
 .controls > button {
-    width: 45px;
-    height: 45px; 
+    width: 90px; /* Set width for buttons */
+    height: 90px; /* Set height for buttons */
     text-align: center; /* Center text/icon inside button */
     border-radius: 100%; /* Make buttons circular */
     margin: 0 6px; /* Margin between buttons */
@@ -73,7 +80,7 @@ canvas {
 }
 
 .controls button:nth-child(2) {
-    border: 2px solid #008496; /* Blue border for other button (optional) */
+    border: 2px solid #008496; /* Blue border for other button */
 }
 
 .controls button:nth-child(2) svg {
@@ -83,7 +90,7 @@ canvas {
 /* Styles for the results section */
 .results {
     display: flex;
-    justify-content: space-between; /* Align healthiness score and nutrients side by side */
+    flex-direction: column; /* Stack healthiness score and nutrients vertically */
     align-items: flex-start; /* Align items to the top */
     gap: 20px;
     margin-top: 20px;
@@ -91,26 +98,26 @@ canvas {
 
 /* Healthiness score styling */
 .healthiness-score-container {
-    width: 25%; /* Make the container smaller for left alignment */
+    width: 100%; /* Full width for alignment */
+    display: block;
+    text-align: left; /* Align text to the left */
+    margin-bottom: 10px; /* Add space below */
 }
 
 #healthinessScore {
     font-size: 2rem; /* Make the score larger */
     font-weight: bold; /* Bold text */
     color: #D2002E; /* Red to make it stand out */
-    text-align: left; /* Align the text to the left */
 }
 
 /* Nutrients list styling */
 .nutrients-container {
-    width: 70%; /* Make the nutrients section larger */
+    width: 100%; /* Full width for alignment */
 }
 
 .nutrients-container h3 {
     margin-bottom: 10px; /* Add space below the title */
 }
-
-
 
 /* Wrapper for the loading button */
 .loading-button-wrapper {
@@ -125,36 +132,45 @@ canvas {
     position: relative;
     padding: 10px 20px;
     font-size: 16px;
-    border: 2px solid #008496;
-    background-color: transparent;
-    color: #008496;
-    cursor: pointer;
-    border-radius: 5px;
-    overflow: hidden;
-    transition: background-color 0.3s ease;
+    border: 2px solid #008496; /* Border color */
+    background-color: transparent; /* Transparent background */
+    color: #008496; /* Text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    overflow: hidden; /* Hide overflow */
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .loading-button:hover {
-    background-color: #008496;
-    color: white;
+    background-color: #008496; /* Background color on hover */
+    color: white; /* Text color on hover */
 }
 
 /* Progress bar container */
 .progress-bar {
-    position: absolute;
+    position: absolute; /* Position the progress bar at the bottom */
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 5px 5px;
-    overflow: hidden;
+    width: 100%; /* Full width */
+    height: 5px; /* Height of the progress bar */
+    background-color: rgba(0, 0, 0, 0.1); /* Light background */
+    border-radius: 0 0 5px 5px; /* Rounded bottom corners */
+    overflow: hidden; /* Hide overflow */
+    display: none; /* Start hidden */
 }
 
 /* The fill inside the progress bar */
 .progress-fill {
-    width: 0%;
-    height: 100%;
-    background-color: #D2002E;
-    transition: width 0.5s ease;
+    width: 0%; /* Start with no fill */
+    height: 100%; /* Full height */
+    background-color: #D2002E; /* Fill color */
+    transition: width 0.5s ease; /* Smooth width transition */
+}
+
+#notFoundMessage {
+    padding: 10px; /* Padding */
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Red border */
+    border-radius: 5px; /* Rounded corners */
+    margin-top: 10px; /* Margin at the top */
 }

@@ -38,8 +38,6 @@ const constraints = {
     }
 };
 
-// Initialize camera selection on page load
-getCameraSelection();
 
 // Function to get available camera selection
 const getCameraSelection = async () => {
@@ -51,17 +49,34 @@ const getCameraSelection = async () => {
     cameraOptions.innerHTML = options.join('');
 };
 
+
+// Initialize camera selection on page load
+getCameraSelection();
+
 // Play button click handler
 play.onclick = async () => {
-    if (streamStarted) {
-        video.play();
-        play.classList.add('d-none');
-        capture.classList.remove('d-none');
-        return;
-    }
-    if (navigator.mediaDevices.getUserMedia) {
-        const updatedConstraints = { ...constraints, deviceId: { exact: cameraOptions.value } };
+    try {
+        if (streamStarted) {
+            video.play();
+            play.classList.add('d-none');
+            capture.classList.remove('d-none');
+            return;
+        }
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert("Your browser doesn't support camera access.");
+            return;
+        }
+
+        const updatedConstraints = { 
+            ...constraints, 
+            deviceId: { exact: cameraOptions.value } 
+        };
+
         await startStream(updatedConstraints);
+    } catch (error) {
+        console.error("Error starting video:", error);
+        alert("Failed to start the video. Please check camera permissions.");
     }
 };
 
@@ -100,6 +115,8 @@ const captureImage = () => {
     screenshotImage.src = capturedImageData;
     screenshotImage.classList.remove('d-none');
 
+    document.querySelector('.result-container p').style.display = 'inline'
+
     startLoading(); // Start the loading animation
     sendImageToApi(capturedImageData);
 };
@@ -125,13 +142,18 @@ const sendImageToApi = async (base64Image) => {
     }
 };
 
-// Display the results from the API
 const displayResults = (data) => {
-    if (!data) {
+    if (!data || data.length === 0) { // Check if data is empty or undefined
         console.log("Product not found in the database.");
+        notFoundMessage.textContent = "Product not found in the database."; // Show the message
+        notFoundMessage.classList.remove('d-none'); // Make it visible
+        barcodeElement.textContent = '';
+        nutrientsElement.innerHTML = '';
+        healthinessScoreElement.textContent = '';
         return;
     }
 
+    notFoundMessage.classList.add('d-none'); // Hide the message if product is found
     const nutritionData = data[0];
     const healthinessScore = data[1];
 
@@ -154,6 +176,8 @@ const displayResults = (data) => {
 // Start the loading animation
 const startLoading = () => {
     progressBarFill.style.width = '0%';
+    const progressBar = document.querySelector('.progress-bar');
+    progressBar.style.display = 'block'; // Show the progress bar
 
     let progress = 0;
     const interval = setInterval(() => {
@@ -164,9 +188,13 @@ const startLoading = () => {
     }, 500);
 };
 
-// Stop the loading animation
 const stopLoading = () => {
     progressBarFill.style.width = '100%';
+    setTimeout(() => {
+        progressBarFill.style.width = '0%'; // Reset for next use
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.style.display = 'none'; // Hide the progress bar
+    }, 500); // Delay hiding for visibility
 };
 
 // Add event listeners for the buttons
