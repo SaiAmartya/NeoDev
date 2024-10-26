@@ -1,0 +1,160 @@
+/* Main container for the image display */
+.display-cover {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    width: 70%; 
+    margin: 5% auto; /* Center the container and give top/bottom margin */
+    position: relative; /* Positioning context for absolutely positioned elements */
+}
+
+/* Styles for the canvas element that will hold the captured image */
+canvas {
+    display: none; /* Initially hide the canvas */
+}
+
+/* Styles for the dropdown menu to select the camera */
+.video-options {
+    position: absolute; /* Position it relative to the display-cover */
+    left: 20px; /* Distance from the left edge */
+    top: 30px; /* Distance from the top edge */
+}
+
+/* Styles for the control buttons */
+.controls {
+    position: absolute; /* Position controls within the display-cover */
+    right: 20px; 
+    top: 20px; 
+    display: flex; /* Use flexbox for horizontal layout of buttons */
+}
+
+/* Common styles for all buttons in the controls */
+.controls > button {
+    width: 45px;
+    height: 45px; 
+    text-align: center; /* Center text/icon inside button */
+    border-radius: 100%; /* Make buttons circular */
+    margin: 0 6px; /* Margin between buttons */
+    background: transparent; /* Transparent background for buttons */
+}
+
+/* Change button icon color on hover */
+.controls > button:hover svg {
+    color: white !important; /* Change icon color to white when hovered */
+}
+
+/* Responsive styles for small screens */
+@media (min-width: 300px) and (max-width: 400px) {
+    .controls {
+        flex-direction: column; /* Stack buttons vertically */
+    }
+
+    .controls button {
+        margin: 5px 0 !important; /* Add margin between buttons */
+    }
+}
+
+/* Styles for the icons inside the buttons */
+.controls > button > svg {
+    height: 20px; /* Set height of the icon */
+    width: 18px; /* Set width of the icon */
+    text-align: center; /* Center the icon */
+    margin: 0 auto; /* Center the icon horizontally */
+    padding: 0; /* Remove any padding */
+}
+
+/* Specific styles for each button */
+.controls button:nth-child(1) {
+    border: 2px solid #D2002E; /* Red border for capture button */
+}
+
+.controls button:nth-child(1) svg {
+    color: #D2002E; /* Red color for capture button icon */
+}
+
+.controls button:nth-child(2) {
+    border: 2px solid #008496; /* Blue border for other button (optional) */
+}
+
+.controls button:nth-child(2) svg {
+    color: #008496; /* Blue color for the icon */
+}
+
+/* Styles for the results section */
+.results {
+    display: flex;
+    justify-content: space-between; /* Align healthiness score and nutrients side by side */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Healthiness score styling */
+.healthiness-score-container {
+    width: 25%; /* Make the container smaller for left alignment */
+}
+
+#healthinessScore {
+    font-size: 2rem; /* Make the score larger */
+    font-weight: bold; /* Bold text */
+    color: #D2002E; /* Red to make it stand out */
+    text-align: left; /* Align the text to the left */
+}
+
+/* Nutrients list styling */
+.nutrients-container {
+    width: 70%; /* Make the nutrients section larger */
+}
+
+.nutrients-container h3 {
+    margin-bottom: 10px; /* Add space below the title */
+}
+
+
+
+/* Wrapper for the loading button */
+.loading-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Loading button with a hidden progress bar initially */
+.loading-button {
+    position: relative;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #008496;
+    background-color: transparent;
+    color: #008496;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.loading-button:hover {
+    background-color: #008496;
+    color: white;
+}
+
+/* Progress bar container */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+}
+
+/* The fill inside the progress bar */
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #D2002E;
+    transition: width 0.5s ease;
+}
